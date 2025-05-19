@@ -1,7 +1,7 @@
 import type { Config } from 'stylelint';
-import plugins from './rules/plugins';
+import { customPlugins } from './rules/plugins';
 
-const config: Config = {
+export const config: Config = {
   extends: [
     'stylelint-config-standard',
     'stylelint-config-idiomatic-order'
@@ -9,19 +9,21 @@ const config: Config = {
   plugins: [
     'stylelint-scss',
     'stylelint-high-performance-animation',
-    ...plugins
+    ...customPlugins
   ],
   customSyntax: 'postcss-scss',
   rules: {
+    'color-hex-length': 'long',
     'at-rule-no-unknown': null,
     'scss/at-rule-no-unknown': true,
-    'color-hex-length': 'long',
     'selector-pseudo-class-no-unknown': [true, {
-      ignorePseudoClasses: ['global', 'local']
+      ignorePseudoClasses: ['global']
     }],
-    'plugin/no-low-performance-animation-properties': true,
+    'unit-no-unknown': null,
+    'plugin/no-low-performance-animation-properties': [true, { ignoreProperties: ['color', 'background-color', 'border-radius', 'border-color'] }],
+    'selector-type-no-unknown': [true, { ignore: ['custom-elements', 'default-namespace'] }],
+    'selector-type-case': ['lower', { ignoreTypes: ['/.+/'] }],
+    'property-no-unknown': null,
     'basic-rules/max-nesting-depth': 4,
   }
 };
-
-export = config;

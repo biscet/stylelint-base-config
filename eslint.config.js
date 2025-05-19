@@ -11,7 +11,7 @@ import 'eslint-plugin-only-warn';
 export default [
   { ignores: ['**/dist/**', '**/coverage/**', '**/node_modules/**', 'tests'] },
   {                                            
-    files: ['src/**/*.ts'],
+    files: ['src/**/*.ts', 'src/**/*.js'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
@@ -19,7 +19,8 @@ export default [
         sourceType: 'module'
       },
       globals: {
-        ...globals.node
+        ...globals.node,
+        testRule: 'readonly',
       }
     },
      settings: {
@@ -48,7 +49,8 @@ export default [
       'no-multi-spaces': 'error',
       'no-trailing-spaces': 'error',
       'n/no-missing-import': 'off',
-      'import/no-unresolved': 'off'
+      'import/no-unresolved': 'off',
+      'sonarjs/no-empty-test-file': 'off'
     }
   }
 ];
