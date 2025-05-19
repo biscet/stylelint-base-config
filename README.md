@@ -9,17 +9,17 @@
 ## Установка
 NPM: 
 ```bash 
-npm install --save-dev stylelint @biscet/stylelint-base-config
+npm install --save-dev stylelint @e_fellow/stylelint-base-config
 ```
 
 YARN:
 ```bash 
-yarn add -D stylelint @biscet/stylelint-base-config
+yarn add -D stylelint @e_fellow/stylelint-base-config
 ```
 
 После установки в ```.stylelintrc.js```:
 ```js
-module.exports = { extends: ['@biscet/stylelint-base-config'], };
+module.exports = { extends: ['@e_fellow/stylelint-base-config'], };
 ```
 
 | Категория | Элемент | Назначение |

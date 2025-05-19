@@ -1,5 +1,5 @@
 {
-  "name": "stylelint-config-custom",
+  "name": "@e_fellow/stylelint-base-config",
   "version": "1.0.0",
   "description": "Базовый набор для конфигурации Stylelint",
   "engines": {
