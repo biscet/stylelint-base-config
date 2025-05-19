@@ -28,7 +28,7 @@ module.exports = { extends: ['@biscet/stylelint-base-config'], };
 | | **stylelint-config-idiomatic-order** | Жёсткий порядок свойств по методологии Idiomatic CSS (`stylelint-order`). |
 | **Plugins (plugins)** | **stylelint-scss** | SCSS-специфичный синтаксис и правила (`scss/at-rule-no-unknown`). |
 | | **stylelint-high-performance-animation** | Предупреждает о затратных свойствах в @keyframes / transition. |
-| | **custom plugins** | 5 собственных правил — см. таблицу ниже. |
+| | **custom plugins** | Собственные правила — см. таблицу ниже. |
 
 ---
 
@@ -66,7 +66,7 @@ module.exports = { extends: ['@biscet/stylelint-base-config'], };
 ```scss
 /* ✅ depth 2 — OK */
 .nav {
-.item { color: red; }
+  .item { color: red; }
 }
 
 /* ❌ depth 4 — ошибка */
