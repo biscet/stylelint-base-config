@@ -1,3 +1,4 @@
-import maxNestingDepthRule from './max-nesting-depth/max-nesting-depth';
+import maxNestingDepth from './max-nesting-depth/max-nesting-depth';
+import noHardcodedColors from './no-hardcoded-colors/no-hardcoded-colors';
 
-export const customPlugins = [maxNestingDepthRule];
+export default [maxNestingDepth, noHardcodedColors] as const;

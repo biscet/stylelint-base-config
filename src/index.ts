@@ -1,5 +1,5 @@
 import type { Config } from 'stylelint';
-import { customPlugins } from './rules/plugins';
+import customPlugins from './rules/plugins';
 
 export const config: Config = {
   extends: [
@@ -23,6 +23,7 @@ export const config: Config = {
     'selector-type-no-unknown': [true, { ignore: ['custom-elements', 'default-namespace'] }],
     'selector-type-case': ['lower', { ignoreTypes: ['/.+/'] }],
     'property-no-unknown': null,
-    'basic-rules/max-nesting-depth': 2,
+    'basic-rules/max-nesting-depth': 3,
+    'basic-rules/no-hardcoded-colors': true,
   }
 };

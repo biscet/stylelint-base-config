@@ -1,10 +1,10 @@
-const customPlugins = require('./src/rules/max-nesting-depth/max-nesting-depth.js');
+const customPlugin = require('./test.plugin.js');
 
 module.exports = {
   plugins: [
-    customPlugins, 
+    customPlugin, 
   ],
   rules: {
-    'basic-rules/max-nesting-depth': 3,
+    'basic-rules/no-hardcoded-colors': true,
   },
 };
