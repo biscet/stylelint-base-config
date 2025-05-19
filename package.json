@@ -42,6 +42,8 @@
     "jest-light-runner": "^0.7.8",
     "jest-preset-stylelint": "7.3.0",
     "postcss": "8.5.3",
+    "postcss-scss": "4.0.9",
+    "stylelint": "16.19.1",
     "ts-jest": "29.3.4",
     "typescript": "5.8.3"
   },
@@ -50,6 +52,6 @@
     "build:src": "tsc -p tsconfig.inplace.json",
     "lint": "npx eslint --fix .",
     "test": "jest",
-    "lint:style": "stylelint \"src/scss/no-extend.{scss,css}\""
+    "lint:style": "stylelint \"src/scss/max-control-nesting.{scss,css}\""
   }
 }

@@ -5,29 +5,43 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _stylelint = require("stylelint");
-const ruleName = 'basic-rules/no-extend';
+const ruleName = 'basic-rules/max-control-nesting';
 const messages = _stylelint.utils.ruleMessages(ruleName, {
-  rejected: '@extend is not allowed; use mixins or utilities instead.'
+  exceeded: (depth, max) => `Control-directive nesting depth ${depth} exceeds the maximum of ${max}`
 });
-const noExtendRuleFn = (enabled = true) => {
+const CONTROL_NAMES = new Set(['if', 'for', 'each', 'while']);
+function isControl(atRule) {
+  return CONTROL_NAMES.has(atRule.name.toLowerCase());
+}
+function getControlDepth(atRule) {
+  let depth = 0;
+  for (let p = atRule.parent; p && p.type !== 'root'; p = p.parent) {
+    if (p.type === 'atrule' && isControl(p)) depth++;
+  }
+  return depth;
+}
+const maxControlNestingFn = (maxDepth = 1) => {
   return (root, result) => {
     if (!_stylelint.utils.validateOptions(result, ruleName, {
-      actual: enabled,
-      possible: [true, false]
+      actual: maxDepth,
+      possible: v => typeof v === 'number' && v >= 0
     })) return;
-    if (!enabled) return;
-    root.walkAtRules('extend', atRule => {
-      _stylelint.utils.report({
-        node: atRule,
-        result,
-        ruleName,
-        message: messages.rejected,
-        word: '@extend'
-      });
+    root.walkAtRules(atRule => {
+      if (!isControl(atRule)) return;
+      const depth = getControlDepth(atRule);
+      if (depth > maxDepth) {
+        _stylelint.utils.report({
+          node: atRule,
+          result,
+          ruleName,
+          message: messages.exceeded(depth, maxDepth),
+          word: `@${atRule.name}`
+        });
+      }
     });
   };
 };
-noExtendRuleFn.ruleName = ruleName;
-noExtendRuleFn.messages = messages;
-const noExtendPlugin = (0, _stylelint.createPlugin)(ruleName, noExtendRuleFn);
-var _default = exports.default = noExtendPlugin;
+maxControlNestingFn.ruleName = ruleName;
+maxControlNestingFn.messages = messages;
+const maxControlNestingPlugin = (0, _stylelint.createPlugin)(ruleName, maxControlNestingFn);
+var _default = exports.default = maxControlNestingPlugin;

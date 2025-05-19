@@ -27,5 +27,6 @@ export const config: Config = {
     'basic-rules/no-hardcoded-colors': true,
     'basic-rules/no-literal-z-index': true,
     'basic-rules/no-extend': true,
+    'basic-rules/max-control-nesting': 1,
   }
 };

@@ -1,0 +1,27 @@
+$sizes: 40px, 50px, 80px;
+
+@each $size in $sizes {
+  .icon-#{$size} {
+    font-size: $size;
+    height: $size;
+    width: $size;
+  }
+
+  @if $item == 40px {
+    .icon-#{$size} {
+      font-size: $size;
+      height: $size;
+      width: $size;
+    }
+  }
+}
+
+@each $item in 1 2 {
+  @if $item == 1 {
+    @for $i from 1 through 2 {
+      .item-#{$item}-#{$i} {
+        width: $i * 10px;
+      }
+    }
+  }
+}

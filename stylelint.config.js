@@ -4,7 +4,8 @@ module.exports = {
   plugins: [
     customPlugin, 
   ],
+  customSyntax: 'postcss-scss',
   rules: {
-    'basic-rules/no-extend': true,
+    'basic-rules/max-control-nesting': 1,
   },
 };
