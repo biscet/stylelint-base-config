@@ -26,5 +26,6 @@ export const config: Config = {
     'basic-rules/max-nesting-depth': 3,
     'basic-rules/no-hardcoded-colors': true,
     'basic-rules/no-literal-z-index': true,
+    'basic-rules/no-extend': true,
   }
 };

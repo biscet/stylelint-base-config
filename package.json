@@ -50,6 +50,6 @@
     "build:src": "tsc -p tsconfig.inplace.json",
     "lint": "npx eslint --fix .",
     "test": "jest",
-    "lint:style": "stylelint \"src/scss/no-literal-z-index.{scss,css}\""
+    "lint:style": "stylelint \"src/scss/no-extend.{scss,css}\""
   }
 }
