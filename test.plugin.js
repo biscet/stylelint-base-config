@@ -5,49 +5,43 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _stylelint = require("stylelint");
-/* eslint-disable sonarjs/slow-regex, sonarjs/regex-complexity */
+/* eslint-disable sonarjs/prefer-single-boolean-return */
 
-const ruleName = 'basic-rules/no-hardcoded-colors';
+const ruleName = 'basic-rules/no-literal-z-index';
 const messages = _stylelint.utils.ruleMessages(ruleName, {
-  rejected: value => `Unexpected hard-coded color value "${value}". Use a CSS custom property (var(--…)) or SCSS variable instead.`
+  rejected: value => `Unexpected literal z-index value "${value}". Use a CSS custom property (var(--…)) or a Sass variable instead.`
 });
-const hexColor = /#(?:[0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})\b/iu;
-const funcColor = /\b(?:rgb|hsl)a?\(\s*[^)]*\)/iu;
-const keywordColor = /\b(?:aliceblue|antiquewhite|aqua|azure|beige|black|blue|brown|chartreuse|coral|crimson|currentcolor|cyan|darkblue|darkgreen|darkslategray|deeppink|firebrick|fuchsia|ghostwhite|gold|gray|green|hotpink|indigo|ivory|khaki|lavender|lawngreen|lemonchiffon|lightblue|lightgreen|linen|magenta|maroon|mediumblue|navy|olive|orange|orchid|peru|pink|plum|purple|red|royalblue|salmon|sienna|silver|skyblue|slategray|snow|springgreen|tan|teal|tomato|transparent|turquoise|violet|wheat|white|whitesmoke|yellow)\b/iu;
-function containsHardcodedColor(value) {
-  const tests = [hexColor, funcColor, keywordColor];
-  for (const re of tests) {
-    const m = value.match(re);
-    if (m) return m[0];
-  }
-  return null;
+const literalInt = /^-?\d[\d_]*$/u;
+function isAllowed(value) {
+  if (/var\(--.+\)/.test(value)) return true;
+  if (/^\$[\w-]+$/.test(value)) return true;
+  if (value.trim() === 'auto') return true;
+  if (/^calc\(.+\)$/u.test(value)) return true;
+  return false;
 }
-const noHardcodedColorsRuleFn = (enabled = true) => {
+const noLiteralZRuleFn = (enabled = true) => {
   return (root, result) => {
     if (!_stylelint.utils.validateOptions(result, ruleName, {
       actual: enabled,
       possible: [true, false]
-    })) {
-      return;
-    }
-    root.walkDecls(decl => {
-      if (decl.prop.startsWith('$')) return;
-      const val = decl.value;
-      if (/var\(--.+\)/.test(val) || /\$[a-zA-Z0-9_-]+/.test(val)) return;
-      const bad = containsHardcodedColor(val);
-      if (bad) {
+    })) return;
+    root.walkDecls('z-index', decl => {
+      const value = decl.value.trim();
+      if (!enabled) return;
+      if (isAllowed(value)) return;
+      if (literalInt.test(value)) {
         _stylelint.utils.report({
           node: decl,
           result,
           ruleName,
-          message: messages.rejected(bad),
-          word: bad
+          message: messages.rejected(value),
+          word: value
         });
       }
     });
   };
 };
-noHardcodedColorsRuleFn.ruleName = ruleName;
-noHardcodedColorsRuleFn.messages = messages;
-const noHardcodedColorsPlugin = (0, _stylelint.createPlugin)(ruleName, noHardcodedColorsRuleFn);
-var _default = exports.default = noHardcodedColorsPlugin;
+noLiteralZRuleFn.ruleName = ruleName;
+noLiteralZRuleFn.messages = messages;
+const noLiteralZPlugin = (0, _stylelint.createPlugin)(ruleName, noLiteralZRuleFn);
+var _default = exports.default = noLiteralZPlugin;

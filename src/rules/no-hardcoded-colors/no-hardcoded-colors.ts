@@ -21,10 +21,12 @@ const keywordColor =
 
 function containsHardcodedColor(value: string): string | null {
   const tests = [hexColor, funcColor, keywordColor];
+
   for (const re of tests) {
     const m = value.match(re);
     if (m) return m[0];
   }
+
   return null;
 }
 

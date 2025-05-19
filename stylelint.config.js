@@ -5,6 +5,6 @@ module.exports = {
     customPlugin, 
   ],
   rules: {
-    'basic-rules/no-hardcoded-colors': true,
+    'basic-rules/no-literal-z-index': true,
   },
 };
