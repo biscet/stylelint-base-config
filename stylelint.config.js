@@ -1,11 +1,10 @@
-const customPlugins = require('./dist/index.js').default;
+const customPlugins = require('./src/rules/max-nesting-depth/max-nesting-depth.js');
 
 module.exports = {
   plugins: [
-    ...customPlugins, 
+    customPlugins, 
   ],
-  customSyntax: 'postcss-scss',
   rules: {
-    'basic-rules/max-nesting-depth': 2,
+    'basic-rules/max-nesting-depth': 3,
   },
 };

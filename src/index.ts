@@ -11,7 +11,6 @@ export const config: Config = {
     'stylelint-high-performance-animation',
     ...customPlugins
   ],
-  customSyntax: 'postcss-scss',
   rules: {
     'color-hex-length': 'long',
     'at-rule-no-unknown': null,
@@ -24,6 +23,6 @@ export const config: Config = {
     'selector-type-no-unknown': [true, { ignore: ['custom-elements', 'default-namespace'] }],
     'selector-type-case': ['lower', { ignoreTypes: ['/.+/'] }],
     'property-no-unknown': null,
-    'basic-rules/max-nesting-depth': 4,
+    'basic-rules/max-nesting-depth': 2,
   }
 };
