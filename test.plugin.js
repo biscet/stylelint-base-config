@@ -5,43 +5,37 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _stylelint = require("stylelint");
-const ruleName = 'basic-rules/max-control-nesting';
+const ruleName = 'basic-rules/no-important-except-utilities';
 const messages = _stylelint.utils.ruleMessages(ruleName, {
-  exceeded: (depth, max) => `Control-directive nesting depth ${depth} exceeds the maximum of ${max}`
+  rejected: '!important is allowed only in selectors prefixed with ".u-".'
 });
-const CONTROL_NAMES = new Set(['if', 'for', 'each', 'while']);
-function isControl(atRule) {
-  return CONTROL_NAMES.has(atRule.name.toLowerCase());
+function isUtility(rule) {
+  return rule.selectors?.every(sel => sel.trim().startsWith('.u-')) ?? false;
 }
-function getControlDepth(atRule) {
-  let depth = 0;
-  for (let p = atRule.parent; p && p.type !== 'root'; p = p.parent) {
-    if (p.type === 'atrule' && isControl(p)) depth++;
-  }
-  return depth;
-}
-const maxControlNestingFn = (maxDepth = 1) => {
+const noImportantExceptUtilities = (enabled = true) => {
   return (root, result) => {
     if (!_stylelint.utils.validateOptions(result, ruleName, {
-      actual: maxDepth,
-      possible: v => typeof v === 'number' && v >= 0
+      actual: enabled,
+      possible: [true, false]
     })) return;
-    root.walkAtRules(atRule => {
-      if (!isControl(atRule)) return;
-      const depth = getControlDepth(atRule);
-      if (depth > maxDepth) {
-        _stylelint.utils.report({
-          node: atRule,
-          result,
-          ruleName,
-          message: messages.exceeded(depth, maxDepth),
-          word: `@${atRule.name}`
-        });
-      }
+    if (!enabled) return;
+    root.walkRules(cssRule => {
+      const utilOk = isUtility(cssRule);
+      cssRule.walkDecls(decl => {
+        if (decl.important && !utilOk) {
+          _stylelint.utils.report({
+            node: decl,
+            result,
+            ruleName,
+            message: messages.rejected,
+            word: '!important'
+          });
+        }
+      });
     });
   };
 };
-maxControlNestingFn.ruleName = ruleName;
-maxControlNestingFn.messages = messages;
-const maxControlNestingPlugin = (0, _stylelint.createPlugin)(ruleName, maxControlNestingFn);
-var _default = exports.default = maxControlNestingPlugin;
+noImportantExceptUtilities.ruleName = ruleName;
+noImportantExceptUtilities.messages = messages;
+const noImportantPlugin = (0, _stylelint.createPlugin)(ruleName, noImportantExceptUtilities);
+var _default = exports.default = noImportantPlugin;

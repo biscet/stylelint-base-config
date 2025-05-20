@@ -41,6 +41,7 @@ module.exports = { extends: ['@e_fellow/stylelint-base-config'], };
 | `basic-rules/no-literal-z-index` | `true` | Запрещает числовые `z-index`; допускает токены, `auto`, `calc()`. |
 | `basic-rules/no-extend` | `true` | Запрет `@extend`; используем миксины / утилити-классы. |
 | `basic-rules/max-control-nesting` | `1` | Контроль `@if` / `@for` / `@each` / `@while` – не глубже 1 уровня. |
+| `basic-rules/no-important-except-utilities` | `true` | Запрещает использовать `!important` в обычных компонентных стилях и разрешает его только внутри утилитарных классов, начинающихся с префикса `.u-` |
 
 ---
 
@@ -132,6 +133,26 @@ $text-color: #222;
     @each $c in red { }
   }
 }
+```
+
+### basic-rules/no-important-except-utilities
+
+Пример использования:
+```scss
+/* ✅ есть префикс u */
+.u-visually-hidden {
+  position: absolute !important;
+  clip: rect(0 0 0 0) !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
+/* ❌ ошибка */
+.button {
+  background: blue !important;
+}
+
 ```
 
 # Лицензия MIT

@@ -6,6 +6,6 @@ module.exports = {
   ],
   customSyntax: 'postcss-scss',
   rules: {
-    'basic-rules/max-control-nesting': 1,
+    'basic-rules/no-important-except-utilities': true,
   },
 };

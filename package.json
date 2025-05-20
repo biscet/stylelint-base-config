@@ -56,6 +56,6 @@
     "build:src": "tsc -p tsconfig.inplace.json",
     "lint": "npx eslint --fix .",
     "test": "jest",
-    "lint:style": "stylelint \"src/scss/max-control-nesting.{scss,css}\""
+    "lint:style": "stylelint \"src/scss/no-important-except-utilities.{scss,css}\""
   }
 }

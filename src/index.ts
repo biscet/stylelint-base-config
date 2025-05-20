@@ -28,5 +28,6 @@ export const config: Config = {
     'basic-rules/no-literal-z-index': true,
     'basic-rules/no-extend': true,
     'basic-rules/max-control-nesting': 1,
+    'basic-rules/no-important-except-utilities': true,
   }
 };
